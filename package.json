@@ -1,0 +1,42 @@
+{
+  "name": "network-unifi",
+  "version": "0.0.1",
+  "description": "Library for accessing the unifi network equipment",
+  "main": "index.js",
+  "dependencies": {
+    "got": "^6.3.0"
+  },
+  "devDependencies": {
+    "ava": "^0.16.0",
+    "eslint": "^3.2.2",
+    "eslint-config-standard": "^5.3.5",
+    "eslint-plugin-promise": "^2.0.1",
+    "eslint-plugin-standard": "^2.0.0",
+    "nock": "^8.0.0",
+    "nyc": "^7.1.0"
+  },
+  "scripts": {
+    "test": "npm run lint && nyc ava",
+    "lint": "eslint ."
+  },
+  "engines": {
+    "node": "^6.3.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ivx/network-unifi.git"
+  },
+  "keywords": [
+    "unifi",
+    "network"
+  ],
+  "author": "Alexander Plavinski <alexander.plavinski@invision.de>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ivx/network-unifi/issues"
+  },
+  "homepage": "https://github.com/ivx/network-unifi#readme",
+  "eslintConfig": {
+    "extends": "standard"
+  }
+}
