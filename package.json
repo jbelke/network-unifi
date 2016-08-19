@@ -8,6 +8,7 @@
   },
   "devDependencies": {
     "ava": "^0.16.0",
+    "coveralls": "^2.11.12",
     "eslint": "^3.2.2",
     "eslint-config-standard": "^5.3.5",
     "eslint-plugin-promise": "^2.0.1",
@@ -16,7 +17,9 @@
     "nyc": "^7.1.0"
   },
   "scripts": {
-    "test": "npm run lint && nyc ava",
+    "test": "npm run lint && npm run ava && npm run coveralls",
+    "coveralls": "nyc report --reporter=text-lcov | coveralls",
+    "ava": "nyc ava",
     "lint": "eslint ."
   },
   "engines": {
