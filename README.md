@@ -1,4 +1,4 @@
-# network-unifi
+# network-unifi [![CircleCI](https://circleci.com/gh/ivx/network-unifi.svg?style=svg)](https://circleci.com/gh/ivx/network-unifi)
 
 > Library for accessing the unifi network equipment
 
