@@ -45,6 +45,8 @@ function unifi (config = {}) {
     loginOptions.agent = agent
   }
 
+  console.log(`${baseUrl}/api/login`)
+
   const getSessionCookie = () => got(`${baseUrl}/api/login`, loginOptions).then(result => {
     const cookie = result.headers['set-cookie']
     if (!cookie) throw new Error('Invalid Login Cookie')
