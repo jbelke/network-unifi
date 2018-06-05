@@ -1,158 +1,162 @@
-import test from 'ava'
-import nock from 'nock'
-import unifi from './'
+const nock = require('nock');
+const unifi = require('.');
 
 const options = {
-  url: 'https://172.16.0.10',
-  port: 8443,
+  url: 'https://172.16.0.10:8443',
   username: 'admin',
   password: 'password',
-  site: 'default'
-}
+  site: 'default',
+};
 
-test('default options', t => {
+test('default options', async () => {
   const scope = nock('https://192.168.0.1:8443')
     .post('/api/login', {
       username: '',
-      password: ''
+      password: '',
     })
-    .reply(201, {}, {
-      'set-cookie': 'test'
-    })
+    .reply(
+      201,
+      {},
+      {
+        'set-cookie': 'test',
+      },
+    );
 
-  return unifi().then(() => {
-    t.true(scope.isDone() === true)
-  })
-})
+  await unifi();
 
-test('needs all options', t => {
+  expect(scope.isDone()).toBe(true);
+});
+
+test('needs all options', async () => {
   const scope = nock('https://172.16.0.10:8443')
     .post('/api/login', {
       username: 'admin',
-      password: 'password'
+      password: 'password',
     })
-    .reply(201, {}, {
-      'set-cookie': 'test'
-    })
+    .reply(
+      201,
+      {},
+      {
+        'set-cookie': 'test',
+      },
+    );
 
-  return unifi(options).then(() => {
-    t.true(scope.isDone() === true)
-  })
-})
+  await unifi(options);
+  expect(scope.isDone()).toBe(true);
+});
 
-test('needs all options', t => {
+test('sets ssl agent on ignoreSsl option', async () => {
   const scope = nock('https://172.16.0.10:8443')
     .post('/api/login', {
       username: 'admin',
-      password: 'password'
+      password: 'password',
     })
-    .reply(201, {}, {
-      'set-cookie': 'test'
-    })
+    .reply(
+      201,
+      {},
+      {
+        'set-cookie': 'test',
+      },
+    );
 
-  return unifi(options).then((router) => {
-    t.true(scope.isDone() === true)
-  })
-})
+  const optionsSsl = {
+    ...options,
+    ignoreSsl: true,
+  };
 
-test('sets ssl agent on ignoreSsl option', t => {
-  const scope = nock('https://172.16.0.10:8443')
-    .post('/api/login', {
-      username: 'admin',
-      password: 'password'
-    })
-    .reply(201, {}, {
-      'set-cookie': 'test'
-    })
+  await unifi(optionsSsl);
 
-  const optionsSsl = Object.assign({}, options, {
-    ignoreSsl: true
-  })
+  expect(scope.isDone()).toBe(true);
+});
 
-  return unifi(optionsSsl).then(() => {
-    t.true(scope.isDone() === true)
-  })
-})
-
-test('fails if no cookie is returned from login', t => {
+test('fails if no cookie is returned from login', async () => {
   nock('https://172.16.0.10:8443')
     .post('/api/login', {
       username: 'admin',
-      password: 'password'
+      password: 'password',
     })
-    .reply(201, {})
+    .reply(201, {});
 
-  t.throws(unifi(options), 'Invalid Login Cookie')
-})
+  expect(unifi(options)).rejects.toThrowError('Invalid Login Cookie');
+});
 
-test('api #get', t => {
+test('api #get', async () => {
   const scope = nock('https://172.16.0.10:8443')
     .post('/api/login', {
       username: 'admin',
-      password: 'password'
+      password: 'password',
     })
-    .reply(201, {}, {
-      'set-cookie': 'test'
-    })
+    .reply(
+      201,
+      {},
+      {
+        'set-cookie': 'test',
+      },
+    );
 
-  return unifi(options).then((router) => {
-    t.true(scope.isDone() === true)
+  const router = await unifi(options);
+  expect(scope.isDone()).toBe(true);
 
-    const scopeAccess = nock('https://172.16.0.10:8443')
-      .get('/api/s/default/')
-      .reply(201, {data: { test: 'test' }})
+  const scopeAccess = nock('https://172.16.0.10:8443')
+    .get('/api/s/default/')
+    .reply(201, { data: { test: 'test' } });
 
-    return router.get().then(data => {
-      t.deepEqual(data, { test: 'test' })
-      t.true(scopeAccess.isDone() === true)
-    })
-  })
-})
+  const data = await router.get();
 
-test('api #getAccessPoints', t => {
+  expect(data).toEqual({ test: 'test' });
+  expect(scopeAccess.isDone()).toBe(true);
+});
+
+test('api #getAccessPoints', async () => {
   const scope = nock('https://172.16.0.10:8443')
     .post('/api/login', {
       username: 'admin',
-      password: 'password'
+      password: 'password',
     })
-    .reply(201, {}, {
-      'set-cookie': 'test'
-    })
+    .reply(
+      201,
+      {},
+      {
+        'set-cookie': 'test',
+      },
+    );
 
-  return unifi(options).then((router) => {
-    t.true(scope.isDone() === true)
+  const router = await unifi(options);
+  expect(scope.isDone()).toBe(true);
 
-    const scopeAccess = nock('https://172.16.0.10:8443')
-      .get('/api/s/default/stat/device')
-      .reply(201, {data: { test: 'test' }})
+  const scopeAccess = nock('https://172.16.0.10:8443')
+    .get('/api/s/default/stat/device')
+    .reply(201, { data: { test: 'test' } });
 
-    return router.getAccessPoints().then(data => {
-      t.deepEqual(data, { test: 'test' })
-      t.true(scopeAccess.isDone() === true)
-    })
-  })
-})
+  const data = await router.getAccessPoints();
 
-test('api #getClients', t => {
+  expect(data).toEqual({ test: 'test' });
+  expect(scopeAccess.isDone()).toBe(true);
+});
+
+test('api #getClients', async () => {
   const scope = nock('https://172.16.0.10:8443')
     .post('/api/login', {
       username: 'admin',
-      password: 'password'
+      password: 'password',
     })
-    .reply(201, {}, {
-      'set-cookie': 'test'
-    })
+    .reply(
+      201,
+      {},
+      {
+        'set-cookie': 'test',
+      },
+    );
 
-  return unifi(options).then((router) => {
-    t.true(scope.isDone() === true)
+  const router = await unifi(options);
+  expect(scope.isDone()).toBe(true);
 
-    const scopeAccess = nock('https://172.16.0.10:8443')
-      .get('/api/s/default/stat/sta')
-      .reply(201, {data: { test: 'test' }})
+  const scopeAccess = nock('https://172.16.0.10:8443')
+    .get('/api/s/default/stat/sta')
+    .reply(201, { data: { test: 'test' } });
 
-    return router.getClients().then(data => {
-      t.deepEqual(data, { test: 'test' })
-      t.true(scopeAccess.isDone() === true)
-    })
-  })
-})
+  const data = await router.getClients();
+
+  expect(data).toEqual({ test: 'test' });
+  expect(scopeAccess.isDone()).toBe(true);
+});

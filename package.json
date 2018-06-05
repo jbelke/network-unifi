@@ -1,29 +1,23 @@
 {
   "name": "network-unifi",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Library for accessing the unifi network equipment",
   "main": "index.js",
   "dependencies": {
-    "got": "^6.3.0"
+    "cross-fetch": "^2.2.1"
   },
   "devDependencies": {
-    "ava": "^0.16.0",
-    "coveralls": "^2.11.12",
-    "eslint": "^3.2.2",
-    "eslint-config-standard": "^5.3.5",
-    "eslint-plugin-promise": "^2.0.1",
-    "eslint-plugin-standard": "^2.0.0",
-    "nock": "^8.0.0",
-    "nyc": "^7.1.0"
+    "@invisionag/eslint-config-ivx": "^0.2.1",
+    "@invisionag/prettier-config": "^1.0.1",
+    "eslint": "^4.19.1",
+    "jest": "^23.1.0",
+    "nock": "^9.3.0",
+    "prettier": "^1.13.4"
   },
   "scripts": {
-    "test": "npm run lint && npm run ava && npm run coveralls",
-    "coveralls": "nyc report --reporter=text-lcov | coveralls",
-    "ava": "nyc ava",
-    "lint": "eslint ."
-  },
-  "engines": {
-    "node": "^6.3.1"
+    "test": "yarn eslint && yarn jest-ci",
+    "eslint": "eslint index.js test.js",
+    "jest-ci": "jest --env=node --ci --runInBand --coverage"
   },
   "repository": {
     "type": "git",
@@ -38,8 +32,5 @@
   "bugs": {
     "url": "https://github.com/ivx/network-unifi/issues"
   },
-  "homepage": "https://github.com/ivx/network-unifi#readme",
-  "eslintConfig": {
-    "extends": "standard"
-  }
+  "homepage": "https://github.com/ivx/network-unifi#readme"
 }
