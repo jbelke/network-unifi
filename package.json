@@ -7,10 +7,10 @@
     "cross-fetch": "^2.2.1"
   },
   "devDependencies": {
-    "@invisionag/eslint-config-ivx": "^0.2.1",
-    "@invisionag/prettier-config": "^1.0.1",
+    "@invisionag/eslint-config-ivx": "^2.0.2",
+    "@invisionag/prettier-config-ivx": "^1.0.1",
     "coveralls": "^3.0.1",
-    "eslint": "^4.19.1",
+    "eslint": "^5.5.0",
     "jest": "^23.1.0",
     "nock": "^9.3.0",
     "prettier": "^1.13.4"

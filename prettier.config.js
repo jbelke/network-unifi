@@ -1,1 +1,1 @@
-module.exports = require('@invisionag/prettier-config');
+module.exports = require('@invisionag/prettier-config-ivx');
