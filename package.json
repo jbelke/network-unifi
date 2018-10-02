@@ -1,6 +1,6 @@
 {
   "name": "@invisionag/network-unifi",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Library for accessing the unifi network equipment",
   "main": "index.js",
   "engines" : {
