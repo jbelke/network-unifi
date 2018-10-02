@@ -3,9 +3,6 @@
   "version": "0.3.2",
   "description": "Library for accessing the unifi network equipment",
   "main": "index.js",
-  "engines" : {
-    "node" : ">=0.10 <0.11"
-  },
   "dependencies": {
     "cross-fetch": "^2.2.1"
   },
