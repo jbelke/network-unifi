@@ -5,7 +5,7 @@
 
 ## Install
 
-Currently, the module is written on Node 6, without any transpilers, using the
+Currently, the module is written on Node 10+, without any transpilers, using the
 ES2015+ features.
 
 ``` sh
